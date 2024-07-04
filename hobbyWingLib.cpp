@@ -16,11 +16,17 @@ hobbyWingLib::hobbyWingLib(uint8_t pwmChannel, uint8_t pwmPin, uint8_t pwmResolu
 
 void hobbyWingLib::setPWMus(uint16_t PWMus)
 {
+    if (PWMus < 1050)
+        PWMus = 1050;
+    if (PWMus > 1950)
+        PWMus = 1950;
     setPWM(map(PWMus, 1050, 1950, minPwmDuty, maxPwmDuty));
 }
 
 void hobbyWingLib::setPWMPercentage(uint8_t percentage)
 {
+    if (percentage > 100)
+        percentage = 100;
     setPWM(map(percentage, 0, 100, minPwmDuty, maxPwmDuty));
 }
 
