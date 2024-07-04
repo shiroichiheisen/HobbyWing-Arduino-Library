@@ -5,29 +5,23 @@ hobbyWingLib::hobbyWingLib(uint8_t pwmChannel, uint8_t pwmPin, uint8_t pwmResolu
     this->pwmChannel = pwmChannel;
     this->pwmPin = pwmPin;
     this->pwmResolution = pwmResolution;
-}
 
-void hobbyWingLib::begin()
-{
-    ledcSetup(pwmChannel, 50, pwmResolution);
-    ledcAttachPin(pwmPin, pwmChannel);
+    ledcSetup(this->pwmChannel, 500, this->pwmResolution);
+    ledcAttachPin(this->pwmPin, this->pwmChannel);
+
+    minPwmDuty = ((1 << pwmResolution) / 2) - 1;
+    maxPwmDuty = (1 << pwmResolution) - 1;
+    maxPwmDuty = maxPwmDuty * 0.95;
 }
 
 void hobbyWingLib::setPWMus(uint16_t PWMus)
 {
-    uint8_t maxDuty = (1 << pwmResolution) - 1;
-    uint16_t periodMicroseconds = 1000000 / 50;
-    uint16_t duty = map(PWMus, 0, periodMicroseconds, 0, maxDuty);
-    setPWM(duty);
+    setPWM(map(PWMus, 1050, 1950, minPwmDuty, maxPwmDuty));
 }
 
 void hobbyWingLib::setPWMPercentage(uint8_t percentage)
 {
-    if (percentage > 100)
-        percentage = 100;
-
-    uint16_t dutyCycle = map(percentage, 0, 100, 0, (1 << pwmResolution) - 1);
-    setPWM(dutyCycle);
+    setPWM(map(percentage, 0, 100, minPwmDuty, maxPwmDuty));
 }
 
 void hobbyWingLib::setPWM(uint16_t PWMduty)

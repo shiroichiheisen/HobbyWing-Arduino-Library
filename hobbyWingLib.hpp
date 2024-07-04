@@ -7,7 +7,6 @@ class hobbyWingLib
 {
 public:
     hobbyWingLib(uint8_t pwmChannel, uint8_t pwmPin, uint8_t pwmResolution);
-    void begin();
     void setPWMus(uint16_t PWMus);
     void setPWMPercentage(uint8_t percentage);
 
@@ -17,6 +16,9 @@ private:
         pwmChannel,
         pwmPin,
         pwmResolution;
+    uint16_t
+        minPwmDuty,
+        maxPwmDuty;
 };
 
 #endif
