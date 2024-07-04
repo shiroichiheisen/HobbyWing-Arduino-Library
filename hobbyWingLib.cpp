@@ -26,7 +26,7 @@ void hobbyWingLib::setPWMPercentage(uint8_t percentage)
     if (percentage > 100)
         percentage = 100;
 
-    int dutyCycle = map(percentage, 0, 100, 0, (1 << pwmResolution) - 1);
+    uint16_t dutyCycle = map(percentage, 0, 100, 0, (1 << pwmResolution) - 1);
     setPWM(dutyCycle);
 }
 
